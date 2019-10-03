@@ -73,51 +73,46 @@ def tobs():
 
 
 @app.route("/api/v1.0/<start>")
-def start(start_date):
+def start(start):
     """ Return a JSON list of TMIN, TAVG, and TMAX temp for all dates greater than or equal to the start date """
     
     temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(Measurement.date >= start_date).filter( Measurement.date <= '2017-08-23').all()
-    tmin = temps[0][0]
-    tavg = round(temps[0][1],1)
-    tmax = temps[0][2]
-
-    # Create a dictionary for holding the row data
-    all_temps = []
-    for tmin, tavg, tmax in temps:
-        temp_dict = {}
-        temp_dict["TMIN"] = tmin
-        temp_dict["TAVG"] = tavg
-        temp_dict["TMAX"] = tmax
-        all_temps.append(temp_dict)
-
-    return jsonify(all_temps)
-
-    
-@app.route("/api/v1.0/<start>/<end>")
-def start_end(start_date, end_date):
-    """ Return a JSON list of TMIN, TAVG, and TMAX temp for all dates between start and end dates, inclusive."""
-    
-    temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
+        filter(Measurement.date >= start).filter( Measurement.date <= '2017-08-23').all()
     tmin = temps[0][0]
     tavg = round(temps[0][1],2)
     tmax = temps[0][2]
-    return tmin, tavg, tmax
     
-    # Create a dictionary for holding the row data
-    all_temps = []
-    for tmin, tavg, tmax in temps:
-        temp_dict = {}
-        temp_dict["TMIN"] = tmin
-        temp_dict["TAVG"] = tavg
-        temp_dict["TMAX"] = tmax
-            all_temps.append(temp_dict)
+    
+    # Create a dictionary for holding the data
 
-    return jsonify(all_temps)
+    temp_dict = {}
+    temp_dict["TMIN"] = tmin
+    temp_dict["TAVG"] = tavg
+    temp_dict["TMAX"] = tmax
+
+    return jsonify(temp_dict)
 
     
+@app.route("/api/v1.0/<start>/<end>")
+def start_end(start, end):
+    """ Return a JSON list of TMIN, TAVG, and TMAX temp for all dates between start and end dates, inclusive."""
+    
+    temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+        filter(Measurement.date >= start).filter(Measurement.date <= end).all()
+    tmin = temps[0][0]
+    tavg = round(temps[0][1],2)
+    tmax = temps[0][2]
+    
+    # Create a dictionary for holding the data
 
+    temp_dict = {}
+    temp_dict["TMIN"] = tmin
+    temp_dict["TAVG"] = tavg
+    temp_dict["TMAX"] = tmax
+
+    return jsonify(temp_dict)
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
