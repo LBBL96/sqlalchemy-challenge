@@ -28,9 +28,9 @@ def home():
     return (
         f"Welcome to Hawaii Weather Data!<br/>"
         f"Available Routes:<br/>"
-        f"<a href = /api/v1.0/precipitation>Precipitation</a><br/>"
-        f"<a href = /api/v1.0/stations>Stations</a><br/>"
-        f"<a href = /api/v1.0/tobs>Temperature Observations</a><br/>"
+        f"<a href = /api/v1.0/precipitation> /api/v1.0/precipitation</a><br/>"
+        f"<a href = /api/v1.0/stations>/api/v1.0/stations</a><br/>"
+        f"<a href = /api/v1.0/tobs>/api/v1.0/tobs</a><br/>"
         f"add your start date to the end of this route: /api/v1.0/<br/>"
         f"add your start and ending dates to the end of this route, separated by a forward slash: /api/v1.0/<br/>"
     )
