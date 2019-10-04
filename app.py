@@ -28,7 +28,7 @@ def home():
     return (
         f"Welcome to Hawaii Weather Data!<br/>"
         f"Available Routes:<br/>"
-        f"<a href = /api/v1.0/precipitation> /api/v1.0/precipitation</a><br/>"
+        f"<a href = /api/v1.0/precipitation>/api/v1.0/precipitation</a><br/>"
         f"<a href = /api/v1.0/stations>/api/v1.0/stations</a><br/>"
         f"<a href = /api/v1.0/tobs>/api/v1.0/tobs</a><br/>"
         f"add your start date to the end of this route: /api/v1.0/<br/>"
@@ -79,7 +79,7 @@ def start(start):
     temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
         filter(Measurement.date >= start).filter( Measurement.date <= '2017-08-23').all()
     tmin = temps[0][0]
-    tavg = round(temps[0][1],2)
+    tavg = temps[0][1]
     tmax = temps[0][2]
     
     
@@ -100,7 +100,7 @@ def start_end(start, end):
     temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
         filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     tmin = temps[0][0]
-    tavg = round(temps[0][1],2)
+    tavg = temps[0][1]
     tmax = temps[0][2]
     
     # Create a dictionary for holding the data
